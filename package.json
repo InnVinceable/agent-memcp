@@ -1,0 +1,39 @@
+{
+  "name": "agent-memcp",
+  "version": "0.1.0",
+  "description": "MCP server that gives AI coding agents persistent memory across sessions",
+  "type": "module",
+  "main": "./build/index.js",
+  "bin": {
+    "agent-memcp": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node build/index.js",
+    "inspector": "npx @modelcontextprotocol/inspector node build/index.js"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "@modelcontextprotocol/sdk": "^1.5.0",
+    "better-sqlite3": "^11.0.0",
+    "nanoid": "^5.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "memory",
+    "agent",
+    "ai",
+    "model-context-protocol"
+  ],
+  "license": "MIT"
+}
