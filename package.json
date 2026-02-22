@@ -1,6 +1,6 @@
 {
   "name": "agent-memcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server that gives AI coding agents persistent memory across sessions",
   "type": "module",
   "main": "./build/index.js",
