@@ -1,0 +1,17 @@
+# Source — not needed in the published package (build/ is included via "files")
+src/
+
+# TypeScript config
+tsconfig.json
+
+# Dev tooling
+.github/
+.vscode/
+
+# Local data / model cache (should never be committed, but belt-and-suspenders)
+.agent-memcp/
+
+# Misc
+*.log
+.env
+.env.*

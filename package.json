@@ -7,12 +7,27 @@
   "bin": {
     "agent-memcp": "./build/index.js"
   },
+  "files": [
+    "build/**/*",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
+    "clean": "rm -rf build",
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node build/index.js",
-    "inspector": "npx @modelcontextprotocol/inspector node build/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector node build/index.js",
+    "prepublishOnly": "npm run clean && npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InnVinceable/agent-memcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/InnVinceable/agent-memcp/issues"
+  },
+  "homepage": "https://github.com/InnVinceable/agent-memcp#readme",
   "dependencies": {
     "@huggingface/transformers": "^3.8.1",
     "@modelcontextprotocol/sdk": "^1.5.0",
@@ -33,7 +48,10 @@
     "memory",
     "agent",
     "ai",
-    "model-context-protocol"
+    "model-context-protocol",
+    "semantic-search",
+    "vector-search",
+    "llm"
   ],
   "license": "MIT"
 }
