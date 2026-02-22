@@ -2,11 +2,41 @@
 
 An MCP (Model Context Protocol) server that gives AI coding agents persistent memory across sessions. Agents can remember project conventions, decisions, gotchas, and any other context that would otherwise be lost when a session ends.
 
-Runs as a **stdio MCP server** — your MCP client starts it as a child process automatically, no separate server process to manage.
+Uses **semantic (vector) search** powered by `all-MiniLM-L6-v2` running locally — no GPU or external API required.
+
+Runs as a **stdio MCP server** — your MCP client starts it as a child process automatically via `npx`, no separate server process to manage.
+
+---
+
+## Installation
+
+No global install required. All MCP clients below use `npx agent-memcp` which downloads and runs the package on demand, caching it locally.
+
+If you prefer a global install:
+
+```sh
+npm install -g agent-memcp
+```
 
 ---
 
 ## Connecting to Your Agent
+
+### OpenCode
+
+Add to your OpenCode config (`~/.config/opencode/config.json` or a project-level `.opencode/config.json`):
+
+```json
+{
+  "mcp": {
+    "agent-memcp": {
+      "type": "local",
+      "command": ["npx", "agent-memcp"],
+      "enabled": true
+    }
+  }
+}
+```
 
 ### Claude Desktop
 
@@ -16,26 +46,59 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 {
   "mcpServers": {
     "agent-memcp": {
-      "command": "node",
-      "args": ["/absolute/path/to/agent-memcp/build/index.js"]
+      "command": "npx",
+      "args": ["agent-memcp"]
     }
   }
 }
 ```
 
-Restart Claude Desktop. The four memory tools will appear automatically.
+Restart Claude Desktop. The memory tools will appear automatically.
 
-### OpenCode
+### Claude Code
 
-Add to your project's `.opencode/config.json` or global OpenCode config:
+```sh
+claude mcp add agent-memcp npx agent-memcp
+```
+
+Or add manually to your Claude Code MCP config:
 
 ```json
 {
-  "mcp": {
+  "mcpServers": {
     "agent-memcp": {
-      "type": "local",
-      "command": "node",
-      "args": ["/absolute/path/to/agent-memcp/build/index.js"]
+      "command": "npx",
+      "args": ["agent-memcp"]
+    }
+  }
+}
+```
+
+### Cursor
+
+Add to `.cursor/mcp.json` in your project root, or `~/.cursor/mcp.json` for global use:
+
+```json
+{
+  "mcpServers": {
+    "agent-memcp": {
+      "command": "npx",
+      "args": ["agent-memcp"]
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "agent-memcp": {
+      "command": "npx",
+      "args": ["agent-memcp"]
     }
   }
 }
@@ -46,17 +109,17 @@ Add to your project's `.opencode/config.json` or global OpenCode config:
 Any client that supports the MCP stdio transport can connect. The command is:
 
 ```
-node /absolute/path/to/agent-memcp/build/index.js
+npx agent-memcp
 ```
 
-To pass environment variables (e.g. to switch backend):
+To pass environment variables (e.g. a custom storage path):
 
 ```json
 {
-  "command": "node",
-  "args": ["/path/to/agent-memcp/build/index.js"],
+  "command": "npx",
+  "args": ["agent-memcp"],
   "env": {
-    "MEMCP_BACKEND": "sqlite"
+    "MEMCP_STORAGE_DIR": "/path/to/custom/dir"
   }
 }
 ```
